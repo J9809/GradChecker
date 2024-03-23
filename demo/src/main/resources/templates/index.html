@@ -2,15 +2,121 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: url('index_image.png') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .main-content {
+            text-align: center;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 수정 */
+            align-items: center;
+            height: 100%;
+        }
+        .button {
+            background-color: #A31432; /* 배경색을 투명하게 설정 */
+            color: #FFF;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .button2 {
+            background-color: transparent; /* 배경색을 투명하게 설정 */
+            color: #A31432;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 30px;
+            right: 0;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            display: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #000;
+            text-decoration: none;
+            display: block;
+            padding: 8px 0;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .right-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: right;
+        }
+
+        .right-menu a {
+            color: #A31432;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
-<h1>Login Page</h1>
-This is login Page!
+<div class="container">
+    <div class="main-content">
+        <h1>졸업요건 확인을 위한 페이지</h1>
+        <a href="/login" class="button">졸업요건 검사하기</a>
+    </div>
+    <div class="right-menu">
+        <div class="dropdown">
+            <button class="button2">세종대학교</button>
+            <div class="dropdown-content">
+                <a href="http://www.sejong.ac.kr/" target="_blank">세종대학교 홈페이지</a>
+                <a href="https://portal.sejong.ac.kr/jsp/login/loginSSL.jsp?rtUrl=portal.sejong.ac.kr/comm/member/user/ssoLoginProc.do" target="_blank">학사정보시스템</a>
+                <a href="https://library.sejong.ac.kr/index.ax" target="_blank">학술정보원</a>
+                <a href="https://udream.sejong.ac.kr/" target="_blank">U-dream</a>
+                <a href="https://do.sejong.ac.kr/" target="_blank">Do=Dream</a>
+            </div>
+        </div>
+            <button class="button2">문의하기</button>
+        </div>
+    </div>
+</div>
 </body>
-<form action="/login" method="post">
-    <input type="text" name="username" placeholder="Username"><br> <!-- 수정: "studentId"를 "username"으로 변경 -->
-    <input type="password" name="password" placeholder="Password"><br>
-    <button type="submit">Login</button>
-</form>
 </html>
