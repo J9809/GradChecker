@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import com.gradchecker.demo.controller.SaveController;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -21,5 +22,7 @@ public class DemoApplication {
 		} catch (Exception e) {
 			System.err.println("An error occurred: " + e);
 		}
+		// SaveController를 사용하여 데이터 저장
+		SaveController.saveData();
 	}
 }
