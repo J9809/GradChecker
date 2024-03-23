@@ -1,4 +1,4 @@
-package com.gradchecker.demo;
+package com.gradchecker.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +33,7 @@ public class LoginController {
             return "success"; // 인증 성공 시 대시보드 페이지로 리다이렉트
         } else {
             System.out.println("fail" + username + password);
+
             return "redirect:/login?error"; // 인증 실패 시 로그인 페이지로 리다이렉트 (에러 메시지 포함)
         }
     }
@@ -42,8 +43,4 @@ public class LoginController {
         return "index";
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";
-    }
 }
