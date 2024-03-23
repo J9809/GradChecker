@@ -24,7 +24,7 @@ public class LoginController {
         studentsCollection = database.getCollection("students");
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login_success")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
         // MongoDB에서 사용자 정보 확인
         Document student = studentsCollection.find(new Document("student_id", username)).first();
@@ -38,9 +38,15 @@ public class LoginController {
         }
     }
 
+
     @GetMapping("/")
     public String index() {
         return "index";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 
 }
