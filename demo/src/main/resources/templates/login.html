@@ -2,15 +2,137 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 100px 0px 20px 0px;
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF;
+        }
+
+        /* 로그인 컨테이너 */
+        .login-container {
+            position: relative;
+            width: 700px;
+            margin: auto;
+            background-color: #FFFFFF;
+            border: 5px solid #A31432;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        /* 로그인 폼 */
+        .login-form {
+            position: relative;
+            padding: 50px;
+            background: #FFFFFF;
+            border-radius: 8px;
+            margin: auto;
+            width: max-content; /* 폼의 넓이를 내용물에 맞게 조절 */
+            height: max-content; /* 폼의 높이를 내용물에 맞게 조절 */
+        }
+
+        /* 로그인 제목 */
+        .login-title {
+            margin: 0 0 20px;
+            padding: 0;
+            font-size: 48px;
+            line-height: 58px;
+            text-align: center;
+            color: #000000;
+        }
+        .small-title {
+            text-align: center;
+            padding: 0px 0px 20px 0px;
+        }
+
+        /* 아이디 입력란, 비밀번호 입력란 */
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* 입력란과 버튼을 오른쪽 끝으로 이동 */
+            margin-bottom: 20px;
+        }
+
+        /* 라벨 스타일 */
+        label {
+            font-size: 24px;
+            line-height: 29px;
+            margin-right: 10px;
+            color: #000000;
+        }
+
+        /* 입력란 스타일 */
+        input {
+            padding: 10px;
+            border: 1px solid #A31432;
+            border-radius: 4px;
+            font-size: 24px;
+            line-height: 29px;
+            text-align: center;
+            color: #000000;
+            width: 70%; /* 입력란 너비 조절 */
+        }
+
+        /* 로그인 버튼 */
+        button[type="submit"] {
+            padding: 10px 20px 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #A31432;
+            color: #FFFFFF;
+            font-size: 20px;
+            line-height: 29px;
+            text-align: center;
+            cursor: pointer;
+            width: 28%; /* 버튼 너비 조절 */
+            height: 122px;
+        }
+        .input-group {
+            padding : 0px 15px;
+        }
+        /* 비밀번호 찾기 링크, 회원가입 링크 */
+        .forgot-password, .signup-link {
+            color: #A31432;
+            font-size: 18px;
+            line-height: 16px;
+        }
+
+        /* temp 클래스를 가진 div 요소 */
+        .temp {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .link {
+            text-decoration : none;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Login Page</h1>
-    This is login Page!
+<h1 class="login-title">로그인</h1>
+<p class="small-title">회원님께서 가입하신 아이디와 비밀번호를 입력해주세요.</p>
+<div class="login-container">
+    <form class="login-form" action="/login" method="post">
+        <div class="temp">
+            <div>
+                <div class="input-group">
+                    <label for="username">ID</label>
+                    <input type="text" id="username" name="username" placeholder="Username">
+                </div>
+                <div class="input-group">
+                    <label for="password">PW</label>
+                    <input type="password" id="password" name="password" placeholder="Password">
+                </div>
+            </div>
+            <button type="submit">로그인</button>
+        </div>
+        <p class="forgot-password">비밀번호를 잊어버리셨나요? <a href="" class="link">비밀번호 찾기</a> </p>
+        <p class="signup-link">회원가입은 <a href="" class="link">여기</a>에서 할 수 있습니다.</p>
+    </form>
+</div>
 </body>
-<form action="/login" method="post">
-    <input type="text" name="studentId" placeholder="Student ID"><br>
-    <input type="password" name="password" placeholder="Password"><br>
-    <button type="submit">Login</button>
-</form>
 </html>

@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.hamcrest.Matchers;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(LoginController.class)
@@ -47,7 +48,11 @@ class LoginControllerTest {
                         .param("username", "19010385")
                         .param("password", "wlthd0726"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(Matchers.containsString("SUCCESS")));
+                .andExpect(content().string(Matchers.containsString("alert-success"))); // 변경된 부분
+
+        // 추가된 검증 부분
+        assertThat(student.get("student_id")).isEqualTo("19010385");
+        assertThat(student.get("pw")).isEqualTo("wlthd0726");
     }
 
     @Test
