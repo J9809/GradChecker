@@ -102,47 +102,7 @@
             cursor: pointer;
         }
     </style>
-    <script>
-        // 서버에서 데이터를 가져와서 HTML에 추가하는 함수
-        function fetchData() {
-            // 현재 로그인한 사용자의 ID를 어떻게 가져올지에 따라서 아래 부분을 수정해야 합니다.
-            // 예를 들어, 로그인 시 서버에서 받은 사용자 정보에 ID가 있다면 해당 정보를 사용하거나,
-            // 별도의 요청을 통해 현재 사용자의 ID를 가져와야 합니다.
-            const userId = "현재 사용자의 ID";
 
-            fetch(`/student-info?userId=${userId}`) // 서버의 API 엔드포인트 호출
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                }) // JSON 형식으로 변환
-                .then(data => {
-                    // 가져온 데이터를 HTML에 추가
-                    const studentInfoDiv = document.getElementById('student-info');
-                    if (data) {
-                        studentInfoDiv.innerHTML = `
-                            <p>학번: ${data.student_id}</p>
-                            <p>이름: ${data.student_name}</p>
-                            <p>전공: ${data.major}</p>
-                        `;
-                    } else {
-                        studentInfoDiv.innerHTML = '학생 정보가 없습니다.';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    const studentInfoDiv = document.getElementById('student-info');
-                    studentInfoDiv.innerHTML = '학생 정보를 불러오는 중 오류가 발생했습니다.';
-                });
-        }
-
-
-        // 페이지 로드 시 fetchData 함수 호출하여 데이터 가져오기
-        window.onload = function() {
-            fetchData();
-        };
-    </script>
 </head>
 <body>
 <!-- HTML 코드 -->
