@@ -44,6 +44,14 @@ public class LoginController {
         return "index";
     }
 
+    @GetMapping("/registerMember")
+    public String registerMember(){
+        return "register_member";
+    }
+
+    @GetMapping("/findPassword")
+    public String findPassword(){ return "find_password";}
+
     @GetMapping("/login")
     public String login() {
         return "login";

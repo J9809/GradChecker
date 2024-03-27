@@ -1,23 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Page</title>
+    <style>
+        /* CSS 코드 */
+        /* Mem05 */
+        .mem05 {
+            display: flex; /* Flexbox 사용 */
+            flex-direction: column; /* 세로 방향으로 정렬 */
+            align-items: center; /* 가로 방향 가운데 정렬 */
+            justify-content: center; /* 세로 방향 가운데 정렬 */
+            height: 1024px;
+            background: #FFFFFF;
+            padding: 20px; /* 여백 추가 */
+        }
+
+        /* 마이페이지 */
+        .mypage {
+            margin-bottom: 20px; /* 아래 여백 추가 */
+            font-size: 48px;
+            line-height: 58px;
+            text-align: center;
+            color: #000000;
+        }
+
+        /* 왼쪽 박스와 오른쪽 박스는 이전과 동일하게 유지됩니다. */
+
+        /* 수정하기 */
+        .edit {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 30px;
+            line-height: 36px;
+            color: #FFFFFF;
+            background-color: #A31432;
+            border: none; /* 버튼 스타일링을 위해 기본 border 제거 */
+            cursor: pointer; /* 마우스 커서를 포인터로 변경하여 버튼임을 강조 */
+            padding: 10px 20px; /* 버튼 내부 여백 추가 */
+        }
+
+        /* 로그인 컨테이너 */
+        .container {
+            display: flex; /* Flexbox 사용 */
+            align-items: center; /* 가로 방향 가운데 정렬 */
+            justify-content: space-between; /* 내용들을 컨테이너 양쪽 끝에 배치합니다. */
+            margin-bottom: 20px; /* 아래 여백 추가 */
+            max-width: 700px; /* 최대 너비를 700px로 제한하여 너비가 너무 커지지 않도록 합니다. */
+            background-color: #FFFFFF; /* 배경색을 지정합니다. */
+            border: 5px solid #A31432; /* 테두리 스타일을 지정합니다. */
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* 그림자 효과를 추가합니다. */
+            padding: 20px; /* 컨테이너 내부 여백을 지정합니다. */
+            width: 100%; /* 내용에 따라 자동으로 너비를 조절하도록 설정합니다. */
+        }
+
+        /* 영어 인증및 고전독서 */
+        .title2 {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 30px;
+            line-height: 36px;
+            color: #000000;
+            margin-right: 20px; /* 왼쪽 여백 추가 */
+        }
+
+        /* 모달 스타일 */
+        .modal {
+            display: none; /* 초기에는 숨겨진 상태 */
+            position: fixed; /* 화면에 고정된 위치 */
+            z-index: 1; /* 다른 요소 위에 나타나도록 설정 */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* 스크롤바 추가 */
+            background-color: rgba(0, 0, 0, 0.4); /* 투명한 검은색 배경 */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        // 서버에서 데이터를 가져와서 HTML에 추가하는 함수
+        function fetchData() {
+            // 현재 로그인한 사용자의 ID를 어떻게 가져올지에 따라서 아래 부분을 수정해야 합니다.
+            // 예를 들어, 로그인 시 서버에서 받은 사용자 정보에 ID가 있다면 해당 정보를 사용하거나,
+            // 별도의 요청을 통해 현재 사용자의 ID를 가져와야 합니다.
+            const userId = "현재 사용자의 ID";
+
+            fetch(`/student-info?userId=${userId}`) // 서버의 API 엔드포인트 호출
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                }) // JSON 형식으로 변환
+                .then(data => {
+                    // 가져온 데이터를 HTML에 추가
+                    const studentInfoDiv = document.getElementById('student-info');
+                    if (data) {
+                        studentInfoDiv.innerHTML = `
+                            <p>학번: ${data.student_id}</p>
+                            <p>이름: ${data.student_name}</p>
+                            <p>전공: ${data.major}</p>
+                        `;
+                    } else {
+                        studentInfoDiv.innerHTML = '학생 정보가 없습니다.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    const studentInfoDiv = document.getElementById('student-info');
+                    studentInfoDiv.innerHTML = '학생 정보를 불러오는 중 오류가 발생했습니다.';
+                });
+        }
+
+
+        // 페이지 로드 시 fetchData 함수 호출하여 데이터 가져오기
+        window.onload = function() {
+            fetchData();
+        };
+    </script>
 </head>
 <body>
+<!-- HTML 코드 -->
+<div class="mem05">
+    <div class="mypage">마이페이지</div>
+    <div class="container">
+        <div class="title2">👤 내 정보</div>
+        <div id="student-info"></div>
+        <button class="edit" onclick="openModal('내 정보')">수정하기</button>
+    </div>
+    <div class="container">
+        <div class="title2">📚 영어 인증 및 고전독서</div>
+        <button class="edit" onclick="openModal('영어 인증 및 고전독서')">수정하기</button>
+    </div>
+    <div class="container">
+        <div class="title2">기이수과목</div>
+        <button class="edit" onclick="openModal('기이수과목')">수정하기</button>
+    </div>
 
-<div class="container">
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>Success!</strong> This alert box could indicate a successful or positive action.
+    <!— 모달 —>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modal-text"></p>
+        </div>
     </div>
 </div>
 
+<script>
+    function openModal(text) {
+        document.getElementById("modal-text").innerHTML = text;
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
+
 </body>
 </html>
-

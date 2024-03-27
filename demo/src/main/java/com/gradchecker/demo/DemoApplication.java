@@ -23,6 +23,6 @@ public class DemoApplication {
 			System.err.println("An error occurred: " + e);
 		}
 		// SaveController를 사용하여 데이터 저장
-		SaveController.saveData();
+		//SaveController.saveData();
 	}
 }
