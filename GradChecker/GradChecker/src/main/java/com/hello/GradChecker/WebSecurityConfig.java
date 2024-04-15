@@ -1,17 +1,20 @@
 package com.hello.GradChecker;
-
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Configuration
-@EnableWebSecurity
 public class WebSecurityConfig {
 
     @Bean
@@ -23,6 +26,7 @@ public class WebSecurityConfig {
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/hello")
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());
@@ -31,14 +35,45 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
+        return new UserDetailsServiceImpl();
+    }
+
+    private static class UserDetailsServiceImpl implements UserDetailsService {
+
+        private final MongoCollection<Document> usersCollection;
+
+        public UserDetailsServiceImpl() {
+            // MongoDB에 연결하여 컬렉션 초기화
+            MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+            MongoDatabase database = mongoClient.getDatabase("GradChecker");
+            usersCollection = database.getCollection("students");
+        }
+
+        @Override
+        public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+            // MongoDB에서 사용자 정보 확인
+            Document user = usersCollection.find(new Document("student_id", username)).first();
+            if (user != null) {
+                // 사용자 정보가 있으면 UserDetails 객체를 생성하여 반환
+                String password2 = user.getString("pw");
+
+                System.out.println("가져온 아이디: " + username);
+                System.out.println("가져온 비밀번호: " + password2);
+
+                return org.springframework.security.core.userdetails.User.withUsername(username)
+                        .password(password2)
                         .roles("USER")
                         .build();
-
-        return new InMemoryUserDetailsManager(user);
+            } else {
+                // 사용자 정보가 없으면 예외 발생
+                throw new UsernameNotFoundException("User not found with username: " + username);
+            }
+        }
     }
 }
