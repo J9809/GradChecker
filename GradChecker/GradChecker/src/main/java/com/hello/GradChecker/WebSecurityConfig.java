@@ -61,14 +61,14 @@ public class WebSecurityConfig {
             Document user = usersCollection.find(new Document("student_id", username)).first();
             if (user != null) {
                 // 사용자 정보가 있으면 UserDetails 객체를 생성하여 반환
-                String password2 = user.getString("pw");
+                String encoded_pw = user.getString("pw");
 
                 System.out.println("가져온 아이디: " + username);
-                System.out.println("가져온 비밀번호: " + password2);
+                System.out.println("가져온 비밀번호: " + encoded_pw);
 
                 return org.springframework.security.core.userdetails.User.withUsername(username)
-                        .password(password2)
-                        .roles("USER")
+                        .password(encoded_pw)
+                        //.roles("USER")
                         .build();
             } else {
                 // 사용자 정보가 없으면 예외 발생
