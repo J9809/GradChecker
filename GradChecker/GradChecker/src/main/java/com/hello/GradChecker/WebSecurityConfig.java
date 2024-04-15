@@ -63,7 +63,7 @@ public class WebSecurityConfig {
                 // 사용자 정보가 있으면 UserDetails 객체를 생성하여 반환
                 String encoded_pw = user.getString("pw");
 
-                System.out.println("가져온 아이디2222: " + username);
+                System.out.println("가져온 아이디: " + username);
                 System.out.println("가져온 비밀번호: " + encoded_pw);
 
                 return org.springframework.security.core.userdetails.User.withUsername(username)
