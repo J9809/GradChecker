@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>My Page</title>
+</head>
+<style>
+    /* CSS 코드 */
+    /* Mem05 */
+    .mem05 {
+        display: flex; /* Flexbox 사용 */
+        flex-direction: column; /* 세로 방향으로 정렬 */
+        align-items: center; /* 가로 방향 가운데 정렬 */
+        justify-content: center; /* 세로 방향 가운데 정렬 */
+        height: 1024px;
+        background: #FFFFFF;
+        padding: 20px; /* 여백 추가 */
+    }
+
+    /* 마이페이지 */
+    .mypage {
+        margin-bottom: 20px; /* 아래 여백 추가 */
+        font-size: 48px;
+        line-height: 58px;
+        text-align: center;
+        color: #000000;
+    }
+
+    /* 왼쪽 박스와 오른쪽 박스는 이전과 동일하게 유지됩니다. */
+
+    /* 수정하기 */
+    .edit {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 36px;
+        color: #FFFFFF;
+        background-color: #A31432;
+        border: none; /* 버튼 스타일링을 위해 기본 border 제거 */
+        cursor: pointer; /* 마우스 커서를 포인터로 변경하여 버튼임을 강조 */
+        padding: 10px 20px; /* 버튼 내부 여백 추가 */
+    }
+
+    /* 로그인 컨테이너 */
+    .container {
+        display: flex; /* Flexbox 사용 */
+        align-items: center; /* 가로 방향 가운데 정렬 */
+        justify-content: space-between; /* 내용들을 컨테이너 양쪽 끝에 배치합니다. */
+        margin-bottom: 20px; /* 아래 여백 추가 */
+        max-width: 700px; /* 최대 너비를 700px로 제한하여 너비가 너무 커지지 않도록 합니다. */
+        background-color: #FFFFFF; /* 배경색을 지정합니다. */
+        border: 5px solid #A31432; /* 테두리 스타일을 지정합니다. */
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* 그림자 효과를 추가합니다. */
+        padding: 20px; /* 컨테이너 내부 여백을 지정합니다. */
+        width: 100%; /* 내용에 따라 자동으로 너비를 조절하도록 설정합니다. */
+    }
+
+    /* 영어 인증및 고전독서 */
+    .title2 {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 36px;
+        color: #000000;
+        margin-right: 20px; /* 왼쪽 여백 추가 */
+    }
+
+    /* 모달 스타일 */
+    .modal {
+        display: none; /* 초기에는 숨겨진 상태 */
+        position: fixed; /* 화면에 고정된 위치 */
+        z-index: 1; /* 다른 요소 위에 나타나도록 설정 */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto; /* 스크롤바 추가 */
+        background-color: rgba(0, 0, 0, 0.4); /* 투명한 검은색 배경 */
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<!-- HTML 코드 -->
+<div class="mem05">
+    <div class="mypage">마이페이지</div>
+    <div class="container">
+        <div class="title2">👤 내 정보</div>
+        <div id="student-info"></div>
+        <button class="edit" onclick="openModal('내 정보')">수정하기</button>
+    </div>
+    <div class="container">
+        <div class="title2">📚 영어 인증 및 고전독서</div>
+        <button class="edit" onclick="openModal('영어 인증 및 고전독서')">수정하기</button>
+    </div>
+    <div class="container">
+        <div class="title2">기이수과목</div>
+        <button class="edit" onclick="openModal('기이수과목')">수정하기</button>
+    </div>
+
+    <!— 모달 —>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modal-text"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(text) {
+        document.getElementById("modal-text").innerHTML = text;
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
